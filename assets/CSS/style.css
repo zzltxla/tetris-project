@@ -45,4 +45,20 @@ body{
 #scoreLinesLevel{
     font-family: 'Tetris', sans-serif;
     color: yellow;
+    width: 20px;
+}
+#score{
+    background-color: orange;
+    width: 150px;
+    height: 3vh;
+}
+#lines{ 
+    background-color: orange;
+    height: 3vh;
+    width: 150px;
+}
+#level{
+    background-color: orange;
+    height: 2vh;
+    width: 150px;
 }
