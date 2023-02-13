@@ -10,8 +10,11 @@ body{
     display: flex;
     background-color: black;
     flex-direction: column;
+<<<<<<< HEAD
     font-family: 'Tetris', sans-serif;
     color: yellow;
+=======
+>>>>>>> 635eb4bd4d7e0be71c2adc0d094c8c84fe5c552b
 }
 
 .container{
@@ -22,12 +25,21 @@ body{
 
 .piece{
     width: 100px;
+<<<<<<< HEAD
     position: abolute;
     z-index: 15;
 }
 
 #title{
     font-size: 5rem;
+=======
+}
+
+#title{
+    font-family: 'Tetris', sans-serif;
+    font-size: 5rem;
+    color: yellow;
+>>>>>>> 635eb4bd4d7e0be71c2adc0d094c8c84fe5c552b
 }
 
 #grid{
@@ -40,7 +52,34 @@ body{
     width: 250px;
     margin: 0 auto;
 }
+<<<<<<< HEAD
 .item {
     border: 1px dotted white;
     padding: 0;
 }
+=======
+#hold{
+    color: yellow;
+    font-family: 'Tetris', sans-serif;
+}
+#scoreLinesLevel{
+    font-family: 'Tetris', sans-serif;
+    color: yellow;
+    width: 20px;
+}
+#score{
+    background-color: orange;
+    width: 150px;
+    height: 3vh;
+}
+#lines{ 
+    background-color: orange;
+    height: 3vh;
+    width: 150px;
+}
+#level{
+    background-color: orange;
+    height: 2vh;
+    width: 150px;
+}
+>>>>>>> 635eb4bd4d7e0be71c2adc0d094c8c84fe5c552b
