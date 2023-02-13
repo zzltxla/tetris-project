@@ -1,0 +1,46 @@
+@import url('https://fonts.cdnfonts.com/css/tetris');
+  *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+
+body{
+    display: flex;
+    background-color: black;
+    flex-direction: column;
+    font-family: 'Tetris', sans-serif;
+    color: yellow;
+}
+
+.container{
+    width: 60vw;
+    height: auto;
+    margin: 0 auto;
+}
+
+.piece{
+    width: 100px;
+    position: abolute;
+    z-index: 15;
+}
+
+#title{
+    font-size: 5rem;
+}
+
+#grid{
+    display: grid;
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(20, 25px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    background-color: #25262650;
+    width: 250px;
+    margin: 0 auto;
+}
+.item {
+    border: 1px dotted white;
+    padding: 0;
+}
