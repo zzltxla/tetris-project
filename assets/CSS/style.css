@@ -13,56 +13,14 @@ body{
     color: yellow;
 }
 
-main{
-    /* display: flex;
-    justify-content: center; */
+#background {
+    position: absolute;
+    z-index: -1;
 }
-.container{
-    width: 60vw;
-    height: auto;
-    margin: 0 auto;
-}
-
-.piece{
-    width: 100px;
-    position: abolute;
+#tetris {
+    position: absolute;
     z-index: 15;
 }
-
-h1{
-    font-size: 5rem;
-    color: orange;
-}
-
-#grid{
-    display: grid;
-    grid-template-columns: repeat(10, 25px);
-    grid-template-rows: repeat(20, 25px);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    background-color: #25262650;
-    width: 250px;
-    margin: 0 auto;
-}
-.item {
-    border: 1px dotted white;
-    padding: 0;
-}
-
-#hold{
-    border: 2px solid aqua;
-    text-align: center;
-    width: 10rem;
-    height: 10rem;
-    float: right;
-}
-#next{
-    border: 2px solid aqua;
-    text-align: center;
-    width: 10rem;
-    height: 10rem;
-    float: right;
-} 
 
 
 

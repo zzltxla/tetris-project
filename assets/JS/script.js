@@ -43,7 +43,12 @@ const pieces  = [
 
 const player = {
     pos: {x: 0, y: 0},
-    matrix: pieces[6],
+    matrix: generatePiece(),
+}
+
+function generatePiece () {     //randomizing a piece
+    let random = Math.floor(Math.random() * pieces.length); 
+    return pieces[random];  
 }
 
 function drawMatrix(matrix, x, y){
@@ -71,20 +76,8 @@ ctxBackground.fillRect(0, 0, 10, 20);
 
 
 
-// const pieces = document.querySelectorAll('.piece');   //all the pieces 
-// const grid = document.querySelector('#grid');
-// //var region ends here 
 
-// pieces.forEach(el => {
-//     el.style.display = "none";  //each piece is invisible to the user
-//     el.style.transform = 'translate(33rem, 2rem)'; 
-// }); 
 
-// function generatePiece () {     //randomizing a piece
-//     let random = Math.floor(Math.random() * pieces.length);
-//     pieces[random].style.display = 'inline';
-// }
 
-// generatePiece();
 
 //generation on pieces region ends here 
