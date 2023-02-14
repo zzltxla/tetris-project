@@ -1,3 +1,30 @@
+const canvas = document.getElementById("tetris");
+const context = canvas.getContext('2d');
+
+context.scale('20, 20');
+
+context.fillRect(0, 0, 1, 1);
+
+const pieces  = [
+    [
+        [1, 1],
+        [1, 1]
+    ],
+    [
+        [0, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 1, 0, 0]
+    ],
+    [
+        []
+    ]
+];
+
+
+
+
+
 const pieces = document.querySelectorAll('.piece');   //all the pieces 
 const grid = document.querySelector('#grid');
 //var region ends here 
