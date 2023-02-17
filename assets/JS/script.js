@@ -82,7 +82,7 @@ function drawMatrix(matrix, x, y) {      //creates the piece on the document
                     player.height = 2;
                     break;
                 case pieces[4] : 
-                    ctx.fillStyle = "#db6d07"; //orange L block
+                    ctx.fillStyle = "#f75c02"; //orange L block
                     player.width = 2;
                     player.height = 3;
                     break;
@@ -156,18 +156,26 @@ function moveDown () {
 }   
 
 function toBottom() {
-    player.pos.y = 19 - player.height + 1;
+    let lastPos = player.pos.y = 19 - player.height + 1;
+    return lastPos;
 }
 
 drawMatrix(player.matrix, player.pos.x, player.pos.y);
 
-// do {
-//     if (`${player}`.pos.y = 19 - this.height + 1) {
-//         this.disabled(true);
-//     }
-// } while (this.disabled(true)) {
-//     drawMatrix(player.matrix, player.pos.x, player.pos.y);
-// }
+switch (player.pos.y) {
+    case player.pos.y = 19 - player.height + 1 : 
+    while (this.disabled(true)) {
+        drawMatrix(player.matrix, player.pos.x, player.pos.y);
+    }
+    break;
+}
+
+async function newPiece() {
+    await lastPos; 
+    this.disabled(true);
+    drawMatrix(player.matrix, player.pos.x, player.pos.y);
+    return player;
+}
 
 window.addEventListener('keydown', function (event) {
     let key = event.key;
