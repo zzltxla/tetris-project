@@ -162,13 +162,13 @@ function toBottom() {
 
 drawMatrix(player.matrix, player.pos.x, player.pos.y);
 
-switch (player.pos.y) {
-    case player.pos.y = 19 - player.height + 1 : 
-    while (this.disabled(true)) {
-        drawMatrix(player.matrix, player.pos.x, player.pos.y);
-    }
-    break;
-}
+// switch (player.pos.y) {
+//     case player.pos.y = 19 - player.height + 1 : 
+//     while (this.disabled(true)) {
+//         drawMatrix(player.matrix, player.pos.x, player.pos.y);
+//     }
+//     break;
+// }
 
 // async function newPiece() {
 //     await lastPos; 
