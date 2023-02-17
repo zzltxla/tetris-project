@@ -170,12 +170,12 @@ switch (player.pos.y) {
     break;
 }
 
-async function newPiece() {
-    await lastPos; 
-    this.disabled(true);
-    drawMatrix(player.matrix, player.pos.x, player.pos.y);
-    return player;
-}
+// async function newPiece() {
+//     await lastPos; 
+//     this.disabled(true);
+//     drawMatrix(player.matrix, player.pos.x, player.pos.y);
+//     return player;
+// }
 
 window.addEventListener('keydown', function (event) {
     let key = event.key;
