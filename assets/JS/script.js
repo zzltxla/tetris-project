@@ -1,7 +1,7 @@
 const tetris = document.getElementById("tetris");
 const ctx = tetris.getContext('2d');
 
-ctx.scale(10, 10);
+ctx.scale(20, 20);
 
 
 // All pieces created
@@ -129,7 +129,7 @@ function moveLeft() {   //when left arrow pressed, moves towards the left
 }
 
 function moveRight() {  //when right arrow pressed, moves towards the right
-    while (player.pos.x + player.width < 22) {
+    while (player.pos.x + player.width < 11) {
         ctx.beginPath();
         player.pos.x += player.speed;
         ctx.fillStyle = "#000";
