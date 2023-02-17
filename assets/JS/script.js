@@ -1,10 +1,10 @@
 const tetris = document.getElementById("tetris");
 const ctx = tetris.getContext('2d');
-
+    
 ctx.scale(20, 20);
 
 
-// All pieces created
+// All pieces 
 const pieces = [
     [
         [1, 1],
@@ -49,6 +49,7 @@ const player = {
     matrix: generatePiece(),    //genrates random pieces 
     speed : 1,
     width : 0,
+    height : 0,
 }
 
 function generatePiece() {     //randomizing a piece
@@ -63,30 +64,37 @@ function drawMatrix(matrix, x, y) {      //creates the piece on the document
                 case pieces[0] : 
                     ctx.fillStyle = "#eddf47";  //yellow o block
                     player.width = 2;
+                    player.height = 2;
                     break;
                 case pieces[1] : 
                     ctx.fillStyle = "#43e8ca"; //turquoise I block
                     player.width = 1;
+                    player.height = 4;
                     break;
                 case pieces[2] : 
                     ctx.fillStyle = "#06d618";  //green z block
                     player.width = 3;
+                    player.height = 2;
                     break;
                 case pieces[3] : 
                     ctx.fillStyle = "red"; //red s block
                     player.width = 3;
+                    player.height = 2;
                     break;
                 case pieces[4] : 
                     ctx.fillStyle = "#db6d07"; //orange L block
                     player.width = 2;
+                    player.height = 3;
                     break;
                 case pieces[5] : 
                     ctx.fillStyle = "#080ec7"; //night blue J block
                     player.width = 2;
+                    player.height = 3;
                     break;
                 case pieces[6] : 
                     ctx.fillStyle = "#980ee3";  //purple T block
                     player.width = 3;
+                    player.height = 2;
                     break;
             }
             if (matrix[i][j]) {
@@ -99,6 +107,7 @@ function drawMatrix(matrix, x, y) {      //creates the piece on the document
 let interval = 1000;
 let lastTime = 0;
 let count = 0;
+
 function downpieces(time = 0){  //continuously moves the piece towards the bottom
     const dt = time - lastTime;
     lastTime = time;
@@ -109,19 +118,19 @@ function downpieces(time = 0){  //continuously moves the piece towards the botto
     }
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, tetris.width, tetris.height);
-    ctx.fillStyle = "red";
     drawMatrix(player.matrix, player.pos.x, player.pos.y);
-    requestAnimationFrame(downpieces);
+    requestAnimationFrame(downpieces); 
+    player.pos.y + player.height > 20 ? player.pos.y = 19 - player.height + 1 : downpieces;
 }
+
 downpieces();
 
 function moveLeft() {   //when left arrow pressed, moves towards the left
-    while (player.pos.x > 0) {
+    while (player.pos.x + player.width !== 0 + player.width) {
         ctx.beginPath();
         player.pos.x -= player.speed;
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, tetris.width, tetris.height);
-        ctx.fillStyle = "red";
         drawMatrix(player.matrix, player.pos.x, player.pos.y);
         ctx.endPath();
         requestAnimationFrame(moveLeft);
@@ -129,49 +138,64 @@ function moveLeft() {   //when left arrow pressed, moves towards the left
 }
 
 function moveRight() {  //when right arrow pressed, moves towards the right
-    while (player.pos.x + player.width < 11) {
+    while (player.pos.x + player.width != 13 - player.width + 1) {
         ctx.beginPath();
         player.pos.x += player.speed;
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, tetris.width, tetris.height);
-        ctx.fillStyle = "red";
         drawMatrix(player.matrix, player.pos.x, player.pos.y);
         ctx.endPath();
-        requestAnimationFrame(moveRight);
+        requestAnimationFrame(moveRight);   
     } 
+}
+
+function moveDown () {
+    player.speed = 2;
+    player.pos.y += player.speed;
+    player.pos.y + player.height > 20 ? player.pos.y = 19 - player.height + 1 : downpieces;
+}   
+
+function toBottom() {
+    player.pos.y = 19 - player.height + 1;
 }
 
 drawMatrix(player.matrix, player.pos.x, player.pos.y);
 
-
+// do {
+//     if (`${player}`.pos.y = 19 - this.height + 1) {
+//         this.disabled(true);
+//     }
+// } while (this.disabled(true)) {
+//     drawMatrix(player.matrix, player.pos.x, player.pos.y);
+// }
 
 window.addEventListener('keydown', function (event) {
     let key = event.key;
     switch (key) {
         case 'ArrowLeft':
-            moveLeft(player.pos.x);
+            moveLeft();
             break;
         case 'ArrowRight':
-            moveRight(player.pos.x);
+            moveRight();
+            break;
+        case 'ArrowDown': 
+            moveDown();
+            break;
+        case ' ' : 
+            toBottom()
             break;
     }
     // case 38 : 
     //     changeOrientation(); 
     //     break;
     // case keyCode == 'ArrowRight': 
-
-    //     break;
-    // case 40 : 
-    //     moveDown();
-    //     break;
-}
-);
+});
 
 
 const background = document.querySelector('#background');
 const ctxBackground = background.getContext("2d");
 
 
-ctxBackground.scale(20, 20);
-ctxBackground.fillStyle = 'red';
+ctxBackground.scale(10, 10);
+ctxBackground.fillStyle = '#000';
 ctxBackground.fillRect(0, 0, 10, 20);
