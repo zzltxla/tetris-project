@@ -119,7 +119,7 @@ function downpieces(time = 0){  //continuously moves the piece towards the botto
     if(count >= interval){
         player.pos.y++;
         count = 0;
-    }
+    };
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, tetris.width, tetris.height);
     drawMatrix(player.matrix, player.pos.x, player.pos.y);
@@ -128,6 +128,22 @@ function downpieces(time = 0){  //continuously moves the piece towards the botto
 }
 
 downpieces();
+
+function downpiecesX(time = 0){  //continuously moves the piece towards the bottom
+    const dt = time - lastTime;
+    lastTime = time;
+    count += dt;
+    if(count >= interval){
+        player.pos.x++;
+        count = 0;
+    };
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, tetris.width, tetris.height);
+    drawMatrix(player.matrix, player.pos.x, player.pos.y);
+    requestAnimationFrame(downpiecesX); 
+    player.pos.x + player.height > 20 ? player.pos.x = 19 - player.height + 1 : downpiecesX;
+
+}
 
 function moveLeft() {   //when left arrow pressed, moves towards the left
     while (player.pos.x + player.width !== 0 + player.width) {
@@ -164,14 +180,17 @@ function toBottom() {
 
 function changeOrientation() {
     ctx.save();
+    downpieces = false;
     ctx.translate(player.pos.x, player.pos.y);
     ctx.beginPath();
-    ctx.fillStyle = "#000"; 
+    ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, tetris.width, tetris.height);
     ctx.rotate(90 * Math.PI / 180);
-    ctx.moveTo(player.pos.x, player.pos.y); 
+    ctx.translate(player.pos.x - 10, player.pos.y - 4);
+    downpiecesX();
     ctx.endPath();
     ctx.restore();
+    let orientation = true;
 }
 
 // function changeOrientation() {
