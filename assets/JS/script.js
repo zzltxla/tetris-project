@@ -160,15 +160,18 @@ function moveDown () {
 
 function toBottom() {
     let lastPos = player.pos.y = 19 - player.height + 1;
-    requestAnimationFrame(toBottom);
-    if (lastPos) {
-        tetris.save();
-    }
-    drawMatrix(player.matrix, player.pos.x, player.pos.y);
 }
 
 function changeOrientation() {
-    ctx.rotate(90 );
+    ctx.save();
+    ctx.translate(player.pos.x, player.pos.y);
+    ctx.beginPath();
+    ctx.fillStyle = "#000"; 
+    ctx.fillRect(0, 0, tetris.width, tetris.height);
+    ctx.rotate(90 * Math.PI / 180);
+    ctx.moveTo(player.pos.x, player.pos.y); 
+    ctx.endPath();
+    ctx.restore();
 }
 
 // function changeOrientation() {
@@ -285,7 +288,7 @@ function changeOrientation() {
 //     requestAnimationFrame(changeOrientation);
 // }
 
-let movements =
+
 window.addEventListener('keydown', function (event) {
     let key = event.key;
     switch (key) {
