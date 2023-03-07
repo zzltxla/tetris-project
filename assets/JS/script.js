@@ -1,11 +1,33 @@
 const tetris = document.getElementById("tetris");
 const ctx = tetris.getContext('2d');
-    
 ctx.scale(20, 20);
 
+const background = document.querySelector('#background');
+const ctxBackground = background.getContext("2d");
+ctxBackground.scale(10, 10);
+ctxBackground.fillStyle = '#000';
+ctxBackground.fillRect(0, 0, 10, 20);
+const Background = {
+    height : 10,
+    width : 20,
+};
 
-// All pieces 
-let pieces = [
+const player = {
+    pos: { x: 5, y: 0 },
+    matrix: generatePiece(),    
+    speed : 1,
+    width : 0,
+    height : 0,
+    interactivityEnabled : true,
+}
+
+let ctxOrientation = false;
+
+let interval = 1000;
+let lastTime = 0;
+let count = 0;
+
+let pieces = [  // LIST OF PIECES
     [
         [1, 1],
         [1, 1]
@@ -40,60 +62,50 @@ let pieces = [
     ],
 ];
 
+// VAR REGION ENDS HERE
 
-
-
-
-const player = {
-    pos: { x: 5, y: 0 },
-    matrix: generatePiece(),    //genrates random pieces 
-    speed : 1,
-    width : 0,
-    height : 0,
-    interactivityEnabled : true,
-}
-
-function generatePiece() {     //randomizing a piece
+function generatePiece() {     
     let random = Math.floor(Math.random() * pieces.length);
     return pieces[random];
 }
+//RANDOM PIECE FUNCTION 
 
-function drawMatrix(matrix, x, y) {      //creates the piece on the document
-    for (let i = 0; i < matrix.length; i++) {   //first dimention
-        for (let j = 0; j < matrix[i].length; j++) { //second dimention
-            switch (player.matrix) {    //SWITCH colors of each pieces
+function drawMatrix(matrix, x, y) {      
+    for (let i = 0; i < matrix.length; i++) {   //FIRST DIMENSION
+        for (let j = 0; j < matrix[i].length; j++) { //SECOND DIMENTION 
+            switch (player.matrix) {    //SWITCH LOOP FOR THE COLOR OF EACH PIECES
                 case pieces[0] : 
-                    ctx.fillStyle = "#eddf47";  //yellow o block
+                    ctx.fillStyle = "#eddf47";  //YELLOW O BLOCK
                     player.width = 2;
                     player.height = 2;
                     break;
                 case pieces[1] : 
-                    ctx.fillStyle = "#43e8ca"; //turquoise I block
+                    ctx.fillStyle = "#43e8ca"; //TURQUOISE I BLOCK
                     player.width = 1;
                     player.height = 4;
                     break;
                 case pieces[2] : 
-                    ctx.fillStyle = "#06d618";  //green z block
+                    ctx.fillStyle = "#06d618";  //GREEN Z BLOCK
                     player.width = 3;
                     player.height = 2;
                     break;
                 case pieces[3] : 
-                    ctx.fillStyle = "red"; //red s block
+                    ctx.fillStyle = "red"; //RED S BLOCK
                     player.width = 3;
                     player.height = 2;
                     break;
                 case pieces[4] : 
-                    ctx.fillStyle = "#f75c02"; //orange L block
+                    ctx.fillStyle = "#f75c02"; //ORANGE L BLOCK
                     player.width = 2;
                     player.height = 3;
                     break;
                 case pieces[5] : 
-                    ctx.fillStyle = "#080ec7"; //night blue J block
+                    ctx.fillStyle = "#080ec7"; //BLUE J BLOCK
                     player.width = 2;
                     player.height = 3;
                     break;
                 case pieces[6] : 
-                    ctx.fillStyle = "#980ee3";  //purple T block
+                    ctx.fillStyle = "#980ee3";  //PURPLE T BLOCK
                     player.width = 3;
                     player.height = 2;
                     break;
@@ -108,11 +120,11 @@ function drawMatrix(matrix, x, y) {      //creates the piece on the document
 
 drawMatrix(player.matrix, player.pos.x, player.pos.y);
 
-let interval = 1000;
-let lastTime = 0;
-let count = 0;
+// DRAWING PIECES FUNCTION REGION ENDS HERE
 
-function downpieces(time = 0){  //continuously moves the piece towards the bottom
+
+
+function downpieces(time = 0){  //CONTINUOUSLY MOVES THE PIECE TOWARDS THE BOTTOM
     const dt = time - lastTime;
     lastTime = time;
     count += dt;
@@ -127,25 +139,7 @@ function downpieces(time = 0){  //continuously moves the piece towards the botto
     player.pos.y + player.height > 20 ? player.pos.y = 19 - player.height + 1 : downpieces;
 }
 
-downpieces();
-
-function downpiecesX(time = 0){  //continuously moves the piece towards the bottom
-    const dt = time - lastTime;
-    lastTime = time;
-    count += dt;
-    if(count >= interval){
-        player.pos.x++;
-        count = 0;
-    };
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, tetris.width, tetris.height);
-    drawMatrix(player.matrix, player.pos.x, player.pos.y);
-    requestAnimationFrame(downpiecesX); 
-    player.pos.x + player.height > 20 ? player.pos.x = 19 - player.height + 1 : downpiecesX;
-
-}
-
-function moveLeft() {   //when left arrow pressed, moves towards the left
+function moveLeft() {   
     while (player.pos.x + player.width !== 0 + player.width) {
         ctx.beginPath();
         player.pos.x -= player.speed;
@@ -156,7 +150,7 @@ function moveLeft() {   //when left arrow pressed, moves towards the left
     }
 }
 
-function moveRight() {  //when right arrow pressed, moves towards the right
+function moveRight() {  
     while (player.pos.x + player.width != 13 - player.width + 1) {
         ctx.beginPath();
         player.pos.x += player.speed;
@@ -175,8 +169,9 @@ function moveDown () {
 }   
 
 function toBottom() {
-    let lastPos = player.pos.y = 19 - player.height + 1;
+    player.pos.y = 19 - player.height + 1;
 }
+// Y AXIS MOVEMENT FUNCTION REGION ENDS HERE
 
 function changeOrientation() {
     ctx.save();
@@ -186,154 +181,104 @@ function changeOrientation() {
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, tetris.width, tetris.height);
     ctx.rotate(90 * Math.PI / 180);
-    ctx.translate(player.pos.x - 10, player.pos.y - 4);
+    ctx.translate(player.pos.x - player.width , player.pos.y - player.height);
     downpiecesX();
     ctx.endPath();
     ctx.restore();
-    let orientation = true;
+    ctxOrientation = true;
 }
 
-// function changeOrientation() {
-//     switch (player.matrix) {
-//         case pieces[1] :
-//             pieces[1] = [
-//                 [1, 1, 1, 1],
-//             ];
-//             ctx.fillStyle = "#43e8ca"; //turquoise I block
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             player.width = 4;
-//             player.height = 1;
-//             break;
-//         case pieces[2] : 
-//             pieces[2] = [
-//                 [0, 1],
-//                 [1, 1],
-//                 [1, 0]
-//             ];
-//             ctx.fillStyle = "#06d618";  //green z block
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             player.width = 2;
-//             player.height = 3;
-//             break;
-//         case pieces[3] : 
-//             pieces[3] = [
-//                 [1, 0], 
-//                 [1, 1], 
-//                 [0, 1],
-//             ];
-//             ctx.fillStyle = "red"; //red s block
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             player.width = 2;
-//             player.height = 3;
-//             break;
-//         case pieces[4] : 
-//             pieces[4] = [
-//                 [
-//                     [0, 0, 1],
-//                     [1, 1, 1],
-//                 ], 
-//                 [
-//                     [1, 1],
-//                     [0, 1],
-//                     [0, 1],
-//                 ],
-//             ];
-//             ctx.fillStyle = "#f75c02"; //orange L block
-//             for (let b = 0; b <= pieces[4].length; b++) {
-//                 if (b == 0) {
-//                     player.width = 3;
-//                     player.height = 2;
-//                 } else {
-//                     player.width = 2;
-//                     player.height = 3;
-//                 }
-//             }
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             break;
-//         case pieces[5] :
-//             pieces[5] = [
-//                 [
-//                     [1, 0, 0],
-//                     [1, 1, 1],
-//                 ],
-//                 [
-//                     [1, 1],
-//                     [1, 0],
-//                     [1, 0],
-//                 ],
-//             ];
-//             ctx.fillStyle = "#080ec7"; //night blue J block
-//             for (let a = 0; a <= pieces[5].length; a++) {
-//                 if (a == 0) {
-//                     player.width = 3;
-//                     player.height = 2;
-//                 } else {
-//                     player.width = 2;
-//                     player.height = 3;
-//                 }
-//             };
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             break;
-//         case pieces[6] : 
-//             pieces[6] = [
-//                 [
-//                     [0, 1, 0],
-//                     [1, 1, 1],
-//                 ],
-//                 [
-//                     [1, 0],
-//                     [1, 1],
-//                     [1, 0],
-//                 ],
-//                 [
-//                     [0, 1],
-//                     [1, 1],
-//                     [0, 1],
-//                 ],
-//             ];
-//             ctx.fillStyle = "#980ee3";  //purple T block
-//             for (let i = 0; i <= pieces[6].length; i++) {
-//                 if (i == 0) {
-//                     player.width = 3;
-//                     player.height = 2;
-//                 } else {
-//                     player.width = 2;
-//                     player.height = 3;
-//                 };
-//             }
-//             ctx.fillRect(0, 0, tetris.width, tetris.height);
-//             break;
-//     }
-//     requestAnimationFrame(changeOrientation);
-// }
+function downpiecesX(time = 0){  //CONTINUOUSLY MOVES THE PIECE TOWARDS THE BOTTOM
+    const dt = time - lastTime;
+    lastTime = time;
+    count += dt;
+    if(count >= interval){
+        player.pos.x++;
+        count = 0;
+    };
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, tetris.width, tetris.height);
+    drawMatrix(player.matrix, player.pos.x, player.pos.y);
+    requestAnimationFrame(downpiecesX); 
+    player.pos.x + player.width > 20 ? player.pos.x = 24 - player.width + 1 : downpiecesX;
+}
+
+function moveDownX () {
+    player.speed = 2; 
+    player.pos.x += player.speed;
+    player.pos.x + player.height > 20 ? player.pos.y = 19 - player.height + 1 : downpiecesX;
+}
+
+function moveRightX() {  
+    while (player.pos.y + player.width != 13 - player.width + 1) {
+        ctx.beginPath();
+        player.pos.y += player.speed;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, tetris.width, tetris.height);
+        drawMatrix(player.matrix, player.pos.x, player.pos.y);
+        ctx.endPath();
+        requestAnimationFrame(moveRightX);   
+    } 
+}
+
+function toBottomX() {
+    player.pos.x = 19 - player.height + 1;
+}
+
+function moveLeftX() {   
+    while (player.pos.y + player.width !== 0 + player.width) {
+        ctx.beginPath();
+        player.pos.y -= player.speed;
+        ctx.fillRect(0, 0, tetris.width, tetris.height);
+        drawMatrix(player.matrix, player.pos.x, player.pos.y);
+        ctx.endPath();
+        requestAnimationFrame(moveLeftX);
+    }
+}
+//X AXIS MOVEMENT FUNCTION REGION ENDS HERE
+
 
 
 window.addEventListener('keydown', function (event) {
-    let key = event.key;
-    switch (key) {
-        case 'ArrowLeft':
-            moveLeft();
-            break;
-        case 'ArrowRight':
-            moveRight();
-            break;
-        case 'ArrowDown': 
-            moveDown();
-            break;
-        case ' ' : 
-            toBottom()
-            break;
-        case 'ArrowUp' : 
-            changeOrientation(); 
-            break; 
+    if (!ctxOrientation) {  // IF ORIENTATION TO Y AXIS
+        downpieces();
+        let key = event.key;
+        switch (key) {
+            case 'ArrowLeft':
+                moveLeft();
+                break;
+            case 'ArrowRight':
+                moveRight();
+                break;
+            case 'ArrowDown': 
+                moveDown();
+                break;
+            case ' ' : 
+                toBottom();
+                break;
+            case 'ArrowUp' : 
+                changeOrientation(); 
+                break; 
+        }
+    }else {
+        downpiecesX()   // IF ORIENTATION TO X AXIS
+        let key = event.key;
+        switch (key) {
+            case 'ArrowLeft':
+                moveLeftX();
+                break;
+            case 'ArrowRight':
+                moveRightX();
+                break;
+            case 'ArrowDown': 
+                moveDownX();
+                break;
+            case ' ' : 
+                toBottomX();
+                break;
+            case 'ArrowUp' : 
+                changeOrientation(); 
+                break; 
+        }
     }
 });
-
-
-const background = document.querySelector('#background');
-const ctxBackground = background.getContext("2d");
-
-
-ctxBackground.scale(10, 10);
-ctxBackground.fillStyle = '#000';
-ctxBackground.fillRect(0, 0, 10, 20);
